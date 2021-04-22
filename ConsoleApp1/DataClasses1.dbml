@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Vyuka" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Vyuka.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="ConsoleApp1.Properties.Settings" SettingsPropertyName="VyukaConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Hodnoceni" Member="Hodnoceni">
+    <Type Name="Hodnoceni">
+      <Column Name="Zkratka" Type="System.String" DbType="VarChar(3) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="datum_hodnoceni" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="hodnoceni" Member="hodnoceni1" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Predmety_Hodnoceni" Member="Predmety" ThisKey="Zkratka" OtherKey="Zkratka" Type="Predmety" IsForeignKey="true" />
+      <Association Name="Studenti_Hodnoceni" Member="Studenti" ThisKey="ID" OtherKey="ID" Type="Studenti" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Predmety" Member="Predmety">
+    <Type Name="Predmety">
+      <Column Name="Zkratka" Type="System.String" DbType="VarChar(3) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nazev" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Predmety_Hodnoceni" Member="Hodnoceni" ThisKey="Zkratka" OtherKey="Zkratka" Type="Hodnoceni" />
+      <Association Name="Predmety_SpojovaciTabulka" Member="SpojovaciTabulka" ThisKey="Zkratka" OtherKey="Zkratka" Type="SpojovaciTabulka" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Studenti" Member="Studenti">
+    <Type Name="Studenti">
+      <Column Name="Jmeno" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Prijmeni" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Datum_narozeni" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Studenti_Hodnoceni" Member="Hodnoceni" ThisKey="ID" OtherKey="ID" Type="Hodnoceni" />
+      <Association Name="Studenti_SpojovaciTabulka" Member="SpojovaciTabulka" ThisKey="ID" OtherKey="ID" Type="SpojovaciTabulka" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SpojovaciTabulka" Member="SpojovaciTabulka">
+    <Type Name="SpojovaciTabulka">
+      <Column Name="Zkratka" Type="System.String" DbType="VarChar(3) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Predmety_SpojovaciTabulka" Member="Predmety" ThisKey="Zkratka" OtherKey="Zkratka" Type="Predmety" IsForeignKey="true" />
+      <Association Name="Studenti_SpojovaciTabulka" Member="Studenti" ThisKey="ID" OtherKey="ID" Type="Studenti" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
